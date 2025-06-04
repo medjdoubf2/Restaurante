@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Menú del Restaurante</title>
+  
+</head>
+<body> 
+        <style>
+     body {
+    background-color: white;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-image: url('./img/platos-tipicos-de-la-region-pacifica-1.jpg');  /* la URL de tu imagen */
+    background-size: cover;
+    color: #0000FF;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+  </style>
+   
+
+    <h1>Menú del Restaurante</h1>
+    <div class="menu">
+        <form id="menuForm">
+            <h2>Selecciona un plato:</h2>
+            <label><input type="radio" name="plato" value="Entrecot de ternera"> Entrecot de ternera</label><br>
+            <label><input type="radio" name="plato" value="Macarrones al Pesto"> Macarrones al Pesto</label><br>
+            <label><input type="radio" name="plato" value="Risotto cremoso a la parmesana"> Risotto cremoso a la parmesana</label><br>
+            <label><input type="radio" name="plato" value="Albóndigas de coliflor con tomate"> Albóndigas de coliflor con tomate</label><br>
+
+            <h2>Preferencias e Intolerancias:</h2>
+            <label><input type="checkbox" id="vegano"> Es vegano</label><br>
+            <label><input type="checkbox" id="sinGluten"> Intolerancia al gluten</label><br>
+            <label><input type="checkbox" id="sinLactosa"> Intolerancia a la lactosa</label><br>
+
+            <button type="button" onclick="verificarPlato()">Verificar Plato</button>
+        </form>
+    </div>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function verificarPlato() {
+            const plato = document.querySelector('input[name="plato"]:checked');
+            const esVegano = document.getElementById('vegano').checked;
+            const sinGluten = document.getElementById('sinGluten').checked;
+            const sinLactosa = document.getElementById('sinLactosa').checked;
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (!plato) {
+                resultadoDiv.textContent = "Por favor, selecciona un plato.";
+                return;
+            }
+
+            let mensaje = "";
+            const nombrePlato = plato.value;
+
+            switch (nombrePlato) {
+                case "Macarrones al Pesto":
+                    if (sinGluten) {
+                        mensaje = "El plato es incompatible con la intolerancia al gluten, esperamos que elija otro plato de su agrado.";
+                    } else {
+                        mensaje = `Espero que disfrute nuestro ${nombrePlato}.`;
+                    }
+                    break;
+                case "Risotto cremoso a la parmesana":
+                    if (sinLactosa) {
+                        mensaje = "El plato es incompatible con la intolerancia a la lactosa, esperamos que elija otro plato de su agrado.";
+                    } else {
+                        mensaje = `Espero que disfrute nuestro ${nombrePlato}.`;
+                    }
+                    break;
+                case "Entrecot de ternera":
+                    if (esVegano) {
+                        mensaje = "El plato es incompatible con la preferencia vegana, esperamos que elija otro plato de su agrado.";
+                    } else {
+                        mensaje = `Espero que disfrute nuestro ${nombrePlato}.`;
+                    }
+                    break;
+                case "Albóndigas de coliflor con tomate":
+                    if (esVegano) {
+                        mensaje = `Espero que disfrute nuestro ${nombrePlato}.`;
+                    } else {
+                        mensaje = "El plato es incompatible con la preferencia vegana, esperamos que elija otro plato de su agrado.";
+                    }
+                    break;
+                default:
+                    mensaje = "Por favor, selecciona un plato.";
+            }
+
+            resultadoDiv.textContent = mensaje;
+        }
+    </script>
+
+</body>
+</html>
